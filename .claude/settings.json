@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm *)",
+      "Bash(npx *)",
+      "Bash(npm *)",
+      "Bash(python *)",
+      "Bash(pip *)",
+      "Bash(pytest *)",
+      "Bash(uvicorn *)",
+      "Bash(prisma *)",
+      "Bash(docker *)",
+      "Bash(docker-compose *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "WebSearch"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

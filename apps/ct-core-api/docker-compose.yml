@@ -1,0 +1,44 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/compra-transparente
+      - CORS_ORIGINS=http://localhost:3001
+      - PINO_LOG_LEVEL=info
+      - THROTTLE_TTL=60
+      - THROTTLE_LIMIT=100
+      - CHILECOMPRA_TICKET=${CHILECOMPRA_TICKET}
+      - CHILECOMPRA_API_URL=https://api.mercadopublico.cl/servicios/v1
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+      - SQS_QUEUE_URL=${SQS_QUEUE_URL}
+      - S3_BUCKET_PAYLOADS=${S3_BUCKET_PAYLOADS}
+      - SES_FROM_EMAIL=${SES_FROM_EMAIL}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+    command: pnpm dev
+
+  mongodb:
+    image: mongo:7-jammy
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: compra-transparente
+    volumes:
+      - mongodata:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mongodata:

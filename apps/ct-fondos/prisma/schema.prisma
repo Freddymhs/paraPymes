@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Fondo {
+  id          String    @id @default(uuid())
+  nombre      String
+  institucion String
+  estado      String
+  urlFuente   String    @map("url_fuente")
+  descripcion String?
+  montoMax    BigInt?   @map("monto_max")
+  fechaApertura DateTime? @map("fecha_apertura")
+  fechaCierre DateTime? @map("fecha_cierre")
+  regiones    String[]
+  tiposBeneficiario String[] @map("tipos_beneficiario")
+  rawData     Json?     @map("raw_data")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  alertas     Alerta[]
+
+  @@index([institucion, estado])
+  @@index([fechaCierre])
+  @@map("fondos")
+}
+
+model PymeProfile {
+  id              String  @id @default(uuid())
+  rut             String  @unique
+  razonSocial     String? @map("razon_social")
+  region          String
+  rubroSii        String  @map("rubro_sii")
+  tamanoFiscal    String  @map("tamano_fiscal")
+  generoSocietario String? @map("genero_societario")
+  antiguedadAnios Int?    @map("antiguedad_anios")
+  email           String  @unique
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  alertas         Alerta[]
+
+  @@map("pyme_profiles")
+}
+
+model Alerta {
+  id          String   @id @default(uuid())
+  fondoId     String   @map("fondo_id")
+  pymeId      String   @map("pyme_id")
+  canal       String   // email | whatsapp
+  enviadoAt   DateTime? @map("enviado_at")
+  estado      String   @default("pendiente") // pendiente | enviado | fallido
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  fondo       Fondo        @relation(fields: [fondoId], references: [id])
+  pyme        PymeProfile  @relation(fields: [pymeId], references: [id])
+
+  @@index([pymeId, estado])
+  @@map("alertas")
+}

@@ -1,0 +1,65 @@
+{
+  "project": "ParaPymes — CompraTransparente",
+  "tech": "Monorepo: NestJS (ct-core-api/ct-fondos) + Next.js 16 (ct-core-web) + FastAPI (ct-analytics)",
+  "current_phase": "FASE_1",
+  "generated_at": "2026-05-23",
+  "phases": {
+    "FASE_0": {
+      "status": "completed",
+      "tasks": 8,
+      "total": 8,
+      "description": "Monorepo scaffold, Docker Compose, lint verde"
+    },
+    "FASE_1": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 10,
+      "description": "ct-core-api: ChileCompra client + SQS pipeline + CQRS + bulk OCDS ETL"
+    },
+    "FASE_2": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 6,
+      "description": "ct-fondos: Playwright scraper fondos.gob.cl + FondosRepository + sanity tests"
+    },
+    "FASE_3": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 10,
+      "description": "ct-core-web: Dashboard MVP + auth Supabase + parallel routes + Server Actions"
+    },
+    "FASE_4": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 8,
+      "description": "ct-fondos: scrapers SERCOTEC/CORFO/FOSIS + matching completo + alertas Resend + copiloto LLM"
+    },
+    "FASE_5": {
+      "status": "blocked",
+      "tasks": 0,
+      "total": 10,
+      "description": "ct-analytics: ETL bulk OCDS + XGBoost + SMOTE + SNA NetworkX — BLOQUEADO: requiere 3-6 meses de datos en MongoDB",
+      "unblock_condition": "ct-core-api acumulando datos >= 3 meses"
+    },
+    "FASE_6": {
+      "status": "blocked",
+      "tasks": 0,
+      "total": 8,
+      "description": "ct-analytics: RAG LlamaIndex + inteligencia competitiva + SNA Sigma.js",
+      "unblock_condition": "FASE_5 completada"
+    },
+    "FASE_7": {
+      "status": "pending",
+      "tasks": 0,
+      "total": 8,
+      "description": "Producción: AWS Lambda + Railway + Vercel + Monitoring — deploy incremental desde FASE_3"
+    }
+  },
+  "total_tasks": 68,
+  "sprint_plan": {
+    "sprint_0": ["FASE_0"],
+    "sprint_1": ["FASE_1", "FASE_2"],
+    "sprint_2": ["FASE_3", "FASE_4"],
+    "sprint_3_plus": ["FASE_5", "FASE_6", "FASE_7"]
+  }
+}
