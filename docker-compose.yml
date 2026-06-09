@@ -2,7 +2,7 @@ services:
   mongodb:
     image: mongo:7-jammy
     container_name: ct_mongodb
-    restart: unless-stopped
+    restart: 'no'
     ports:
       - '27017:27017'
     environment:
@@ -18,7 +18,7 @@ services:
   postgresql:
     image: postgres:16-alpine
     container_name: ct_postgresql
-    restart: unless-stopped
+    restart: 'no'
     ports:
       - '5432:5432'
     environment:
@@ -36,7 +36,7 @@ services:
   redis:
     image: redis:7-alpine
     container_name: ct_redis
-    restart: unless-stopped
+    restart: 'no'
     ports:
       - '6379:6379'
     volumes:

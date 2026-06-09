@@ -19,6 +19,10 @@ Reglas específicas de este proyecto. Complementan (no reemplazan) `~/.claude/CL
 
 - **Limpieza obligatoria al adaptar templates**: Cuando se scaffolda un proyecto desde un template externo, auditar y eliminar rutas, páginas, tests y dependencias que vengan del template y no apliquen al dominio real. Es parte del scaffold (FASE 0), no se difiere. Ejemplo concreto: `template-nextjs-fullstack` trajo a `apps/ct-core-web` las rutas demo `/csr`, `/ssr`, `/ssg`, `/isr`, `/api/hello` — ninguna pertenece al producto y fueron eliminadas en auditoría.
 
+## Docker Compose
+
+- **`restart: no` siempre entre comillas** (`'no'`): YAML 1.1 parsea `no` sin comillas como boolean `false`. Compose lo canonicaliza, pero yamllint (regla truthy) y parsers estrictos fallan. Aplica a todo valor del "Norway problem": `no`, `yes`, `on`, `off` como strings → siempre quoted.
+
 ## Gitignore
 
 - **Subdirs de tmp/log/build**: Cuando una herramienta escribe múltiples archivos en un subdirectorio (`tmp/`, `logs/`, `cache/`, `dist/`), ignorar el subdirectorio completo (`testsprite_tests/tmp/`), nunca un archivo puntual (`testsprite_tests/tmp/config.json`). Las herramientas suelen agregar logs adyacentes al config y los patrones puntuales dejan ruido tracked sin querer.

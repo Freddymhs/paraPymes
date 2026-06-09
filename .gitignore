@@ -24,7 +24,6 @@ __pycache__/
 venv/
 .Python
 *.egg-info/
-dist/
 *.dist-info/
 
 # Testing
@@ -64,5 +63,3 @@ testsprite_tests/tmp/
 .claude/settings.local.json
 .serena/
 .codegraph/
-
-testsprite_tests/tmp/config.json
