@@ -7,7 +7,7 @@ Ecosistema de 4 proyectos para PYMEs chilenas proveedoras del Estado.
 | Fase | Proyecto(s) | Sprint | Status |
 |------|------------|--------|--------|
 | [FASE_0_BASE](FASE_0_BASE.md) | Todos | Sprint 0 | ✅ COMPLETADO |
-| [FASE_1_CT_CORE_API_INGESTA](FASE_1_CT_CORE_API_INGESTA.md) | ct-core-api | Sprint 1 | ⏸️ PENDIENTE |
+| [FASE_1_CT_CORE_API_INGESTA](FASE_1_CT_CORE_API_INGESTA.md) | ct-core-api | Sprint 1 | ✅ COMPLETADO |
 | [FASE_2_CT_FONDOS_SCRAPER_BASE](FASE_2_CT_FONDOS_SCRAPER_BASE.md) | ct-fondos | Sprint 1 (paralelo) | ⏸️ PENDIENTE |
 | [FASE_3_CT_CORE_WEB_DASHBOARD_MVP](FASE_3_CT_CORE_WEB_DASHBOARD_MVP.md) | ct-core-web | Sprint 2 | ⏸️ PENDIENTE |
 | [FASE_4_CT_FONDOS_MATCHING_NOTIFICACIONES](FASE_4_CT_FONDOS_MATCHING_NOTIFICACIONES.md) | ct-fondos | Sprint 2 (paralelo) | ⏸️ PENDIENTE |

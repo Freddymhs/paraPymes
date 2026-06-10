@@ -72,7 +72,7 @@ Ingerir datos de ChileCompra (API REST + bulk OCDS) y publicarlos como eventos p
 - Circuit Breaker (opossum) para manejar inestabilidad de la API gubernamental
 - Consultas pesadas entre 22:00–07:00 (recomendación oficial)
 - Publica eventos en SQS FIFO con batching (hasta 10 por llamada)
-- Claim-Check para payloads > 256 KB (almacena en S3, SQS lleva solo el pointer)
+- Claim-Check para payloads > 200 KB (almacena en S3, SQS lleva solo el pointer — margen bajo el límite duro de SQS de 256 KB, que el payload + envoltura excedería)
 
 **Servicio Consumidor/Procesador:**
 - Long polling en SQS

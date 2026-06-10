@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { ConfigService } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
@@ -8,6 +9,8 @@ import { EnvModule } from './config/env.module';
 import { DatabaseModule } from './database/database.module';
 import { HealthModule } from './health/health.module';
 import { LicitacionesModule } from './modules/licitaciones/licitaciones.module.js';
+import { IngestaModule } from './modules/ingesta/ingesta.module.js';
+import { ProcesadorModule } from './modules/procesador/procesador.module';
 import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { GLOBAL_VALIDATION_PIPE } from './common/pipes/validation.pipe';
@@ -15,6 +18,7 @@ import { GLOBAL_VALIDATION_PIPE } from './common/pipes/validation.pipe';
 @Module({
   imports: [
     EnvModule,
+    ScheduleModule.forRoot(),
 
     LoggerModule.forRootAsync({
       inject: [ConfigService],
@@ -46,6 +50,8 @@ import { GLOBAL_VALIDATION_PIPE } from './common/pipes/validation.pipe';
     DatabaseModule,
     HealthModule,
     LicitacionesModule,
+    IngestaModule,
+    ProcesadorModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: GlobalExceptionFilter },

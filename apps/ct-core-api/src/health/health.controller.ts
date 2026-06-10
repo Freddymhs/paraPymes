@@ -4,12 +4,16 @@ import { SkipThrottle } from '@nestjs/throttler';
 import { InjectConnection } from '@nestjs/mongoose';
 import { ConnectionStates, type Connection } from 'mongoose';
 import type { FastifyReply } from 'fastify';
+import { ChileCompraBreaker } from '@modules/ingesta/circuit-breaker/chilecompra.breaker';
 
 @ApiTags('Health')
 @SkipThrottle()
 @Controller('health')
 export class HealthController {
-  constructor(@InjectConnection() private readonly connection: Connection) {}
+  constructor(
+    @InjectConnection() private readonly connection: Connection,
+    private readonly chilecompraBreaker: ChileCompraBreaker,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'Health check with DB connectivity' })
@@ -22,6 +26,7 @@ export class HealthController {
     await reply.status(status).send({
       status: dbHealthy ? 'ok' : 'degraded',
       db: dbHealthy ? 'connected' : 'disconnected',
+      chilecompraCircuit: this.chilecompraBreaker.estado,
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
     });

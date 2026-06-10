@@ -1,7 +1,7 @@
 {
   "project": "ParaPymes — CompraTransparente",
   "tech": "Monorepo: NestJS (ct-core-api/ct-fondos) + Next.js 16 (ct-core-web) + FastAPI (ct-analytics)",
-  "current_phase": "FASE_1",
+  "current_phase": "FASE_2",
   "generated_at": "2026-05-23",
   "phases": {
     "FASE_0": {
@@ -11,8 +11,8 @@
       "description": "Monorepo scaffold, Docker Compose, lint verde"
     },
     "FASE_1": {
-      "status": "pending",
-      "tasks": 0,
+      "status": "completed",
+      "tasks": 10,
       "total": 10,
       "description": "ct-core-api: ChileCompra client + SQS pipeline + CQRS + bulk OCDS ETL"
     },

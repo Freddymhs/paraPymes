@@ -11,6 +11,14 @@ Reglas específicas de este proyecto. Complementan (no reemplazan) `~/.claude/CL
 
 - **Import cleanup**: Al eliminar el uso de un enum o símbolo de un archivo, remover su import en el mismo cambio. No dejar imports muertos para después.
 
+- **`jest.fn()` tipado cuando se lee `mock.calls`**: Un `jest.fn()` sin genéricos tipa `mock.calls` como `any[][]` → todo acceso (`calls[0][0]`) falla `@typescript-eslint/no-unsafe-member-access`. Si el test inspecciona los argumentos del mock, declararlo con genéricos: `jest.Mock<Promise<object>, [ComandoEsperado]>` (o un factory tipado). Castear el resultado con `as` solo lo enmascara.
+
+- **Re-correr lint tras `eslint --fix`**: El `--fix` puede remover casts innecesarios (`no-unnecessary-type-assertion`) y dejar como huérfano el import del tipo casteado, generando un error nuevo (`no-unused-vars`) que el mismo run ya no reporta limpio. Tras un `--fix` que tocó archivos, correr lint de nuevo hasta salida limpia.
+
+## Backend / NestJS
+
+- **Polling loops con pausa tras error**: Todo `while` de polling (SQS, colas, sockets) debe pausar (`await esperarMs(...)` de `@common/utils`) dentro del `catch` antes de la siguiente iteración. Sin pausa, un rechazo rápido (red caída, credenciales inválidas) convierte el loop en hot loop con CPU al 100% y log spam. El happy path con long-polling ya tiene espera implícita — el error path no.
+
 ## Next.js
 
 - **Invalidación de caché tras eliminar rutas**: Al eliminar `app/**/page.tsx` o `app/**/route.ts`, el typecheck/build puede fallar con referencias muertas en `.next/dev/types/validator.ts`. Antes de re-correr typecheck o build, eliminar la caché del proyecto afectado: `rm -rf apps/<app>/.next`. Después correr `pnpm turbo ... --force` para que turbo no use el cache previo.

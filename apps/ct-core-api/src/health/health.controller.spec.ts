@@ -1,8 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getConnectionToken } from '@nestjs/mongoose';
+import { ChileCompraBreaker } from '@modules/ingesta/circuit-breaker/chilecompra.breaker';
 import { HealthController } from './health.controller';
 
 const createMockConnection = (readyState: number) => ({ readyState });
+
+const createMockBreaker = () => ({ estado: 'closed' });
 
 const createMockReply = () => {
   const reply = {
@@ -21,7 +24,10 @@ describe('HealthController', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [HealthController],
-      providers: [{ provide: getConnectionToken(), useValue: mockConnection }],
+      providers: [
+        { provide: getConnectionToken(), useValue: mockConnection },
+        { provide: ChileCompraBreaker, useValue: createMockBreaker() },
+      ],
     }).compile();
 
     controller = module.get<HealthController>(HealthController);

@@ -92,7 +92,8 @@ flowchart TB
 
     INGESTA -->|circuit breaker| SQS_PUB --> SQS_Q
     SQS_Q --> SQS_CON --> LIC_REPO --> MONGO
-    SQS_CON -->|payload >256KB| S3
+    SQS_PUB -->|payload >200KB| S3
+    SQS_CON -->|resolver pointer| S3
     SQS_CON -->|fallo| DLQ --> SES
     
     SCRAPER --> APIFY
@@ -130,7 +131,7 @@ sequenceDiagram
         CB-->>Lambda: LicitacionRaw[]
         loop Batch de 10
             Lambda->>SQS: SendMessageBatch (≤10 mensajes)
-            alt payload > 256 KB
+            alt payload > 200 KB (margen bajo límite SQS 256 KB)
                 Lambda->>S3: PutObject(licitaciones/{fecha}/{codigo}.json)
                 Lambda->>SQS: SendMessage({type: claim-check, s3Key: ...})
             end

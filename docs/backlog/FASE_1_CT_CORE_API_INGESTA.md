@@ -1,6 +1,6 @@
 # FASE 1: ct-core-api — Pipeline de Ingesta ChileCompra
 
-**Status**: ⏸️ PENDIENTE
+**Status**: ✅ COMPLETADO (10/10)
 **Prioridad**: Alta — fuente de verdad del ecosistema
 **Dependencias**: FASE_0
 **Sprint**: Sprint 1

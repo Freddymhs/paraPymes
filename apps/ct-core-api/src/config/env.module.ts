@@ -15,6 +15,15 @@ export const EnvModule = ConfigModule.forRoot({
       .default('info'),
     THROTTLE_TTL: Joi.number().default(60),
     THROTTLE_LIMIT: Joi.number().default(100),
+    CHILECOMPRA_API_URL: Joi.string()
+      .uri()
+      .default('https://api.mercadopublico.cl/servicios/v1'),
+    CHILECOMPRA_TICKET: Joi.string().allow('').default(''),
+    AWS_REGION: Joi.string().default('us-east-1'),
+    SQS_QUEUE_URL: Joi.string().allow('').default(''),
+    SQS_DLQ_URL: Joi.string().allow('').default(''),
+    S3_BUCKET_PAYLOADS: Joi.string().allow('').default(''),
+    SES_FROM_EMAIL: Joi.string().allow('').default(''),
   }),
   validationOptions: { abortEarly: false },
 });
