@@ -11,7 +11,7 @@ model Fondo {
   nombre      String
   institucion String
   estado      String
-  urlFuente   String    @map("url_fuente")
+  urlFuente   String    @unique @map("url_fuente")
   descripcion String?
   montoMax    BigInt?   @map("monto_max")
   fechaApertura DateTime? @map("fecha_apertura")

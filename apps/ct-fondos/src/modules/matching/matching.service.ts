@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@database/prisma.service.js';
+import { ESTADO_FONDO } from '@modules/fondos/fondo.constants.js';
 
 export interface PymeFilters {
   rut: string;
@@ -18,7 +19,7 @@ export class MatchingService {
   async findFondosCompatibles(filters: PymeFilters) {
     const fondos = await this.prisma.fondo.findMany({
       where: {
-        estado: 'abierto',
+        estado: ESTADO_FONDO.ABIERTO,
         OR: [
           { regiones: { has: filters.region } },
           { regiones: { isEmpty: true } },

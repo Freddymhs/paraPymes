@@ -27,6 +27,10 @@ Reglas específicas de este proyecto. Complementan (no reemplazan) `~/.claude/CL
 
 - **Limpieza obligatoria al adaptar templates**: Cuando se scaffolda un proyecto desde un template externo, auditar y eliminar rutas, páginas, tests y dependencias que vengan del template y no apliquen al dominio real. Es parte del scaffold (FASE 0), no se difiere. Ejemplo concreto: `template-nextjs-fullstack` trajo a `apps/ct-core-web` las rutas demo `/csr`, `/ssr`, `/ssg`, `/isr`, `/api/hello` — ninguna pertenece al producto y fueron eliminadas en auditoría.
 
+## Scraping — Parsing de fechas externas
+
+- **Validar fechas parseadas con round-trip**: Al construir `Date` desde campos de texto scrapeados (regex sobre strings de sitios externos), validar que el resultado coincida con el input — `Date.UTC(2025, 1, 31)` JS overflow a `Mar 3, 2025` silenciosamente. Regla: después de parsear, comparar día/mes/año resultantes con lo extraído por la regex; mismatch → descartar y loguear, nunca persistir dato inválido. Caso real: `apps/ct-fondos/src/modules/scraper/fondos-gob.scraper.ts:44` — `parsearFecha` usa `Date.UTC` sin chequeo.
+
 ## Docker Compose
 
 - **`restart: no` siempre entre comillas** (`'no'`): YAML 1.1 parsea `no` sin comillas como boolean `false`. Compose lo canonicaliza, pero yamllint (regla truthy) y parsers estrictos fallan. Aplica a todo valor del "Norway problem": `no`, `yes`, `on`, `off` como strings → siempre quoted.

@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 
 # Set test env vars before importing app modules
 os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
-os.environ.setdefault("SECRET_KEY", "test-secret-key")
+os.environ.setdefault("SECRET_KEY", "test-only-not-real-secret")
 
 from main import app
 from app.config.database import Base, get_db
