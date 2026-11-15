@@ -10,6 +10,6 @@ Sin este import, `alembic revision --autogenerate` genera migraciones vacías.
 
 ### Python — imports tardíos intencionales
 
-Imports que deben ir después de `sys.path.insert` o `load_dotenv` necesitan
-`# noqa: E402` más un comentario que explique por qué el orden es intencionalmente
-no estándar. Sin esto, ruff los marca como errores en lugar de advertencias suprimidas.
+Imports que deben ir después de `sys.path.insert` o `load_dotenv` llevan un comentario que
+explique por qué el orden es intencionalmente no estándar. **No** `# noqa: E402`: el ruff del CI
+(`pip install ruff`, ≥0.17) no habilita E402 y marca ese `noqa` como RUF100 (inútil).

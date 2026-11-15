@@ -1,4 +1,5 @@
 import os
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -8,8 +9,8 @@ from sqlalchemy.orm import sessionmaker
 os.environ.setdefault("DATABASE_URL", "sqlite:///./test.db")
 os.environ.setdefault("SECRET_KEY", "test-only-not-real-secret")
 
-from main import app
 from app.config.database import Base, get_db
+from main import app
 
 # SQLite in-memory DB for tests — no real PostgreSQL needed
 TEST_DATABASE_URL = "sqlite:///./test.db"

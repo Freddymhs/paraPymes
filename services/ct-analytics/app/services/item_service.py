@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
+
+from app.common.errors import not_found
 from app.models.item import Item
 from app.schemas.item import ItemCreate, ItemUpdate
-from app.common.errors import not_found
 
 
 def get_all(db: Session) -> list[Item]:

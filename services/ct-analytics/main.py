@@ -1,12 +1,12 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 
-from app.config.settings import settings
 from app.common.errors import AppError, app_error_handler, validation_error_handler
 from app.common.logger import logger
+from app.config.settings import settings
 from app.routers.items import router as items_router
 from app.routers.ranking import router as ranking_router
 from app.routers.sna import router as sna_router

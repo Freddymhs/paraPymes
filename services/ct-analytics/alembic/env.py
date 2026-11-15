@@ -7,11 +7,12 @@ Key difference from Prisma: migrations are SQL files you control explicitly.
 
 import os
 import sys
-from pathlib import Path
 from logging.config import fileConfig
+from pathlib import Path
 
 from dotenv import load_dotenv
 from sqlalchemy import engine_from_config, pool
+
 from alembic import context
 
 # Ensure project root is on sys.path so `app` is importable when running
@@ -24,8 +25,8 @@ sys.path.insert(0, str(_root))
 load_dotenv(_root / ".env")
 
 # Import all models so Alembic can detect schema changes for autogenerate
-from app.config.database import Base  # noqa: E402
-import app.models  # noqa: F401 E402 — registers all models on Base.metadata
+import app.models  # noqa: F401 — registers all models on Base.metadata
+from app.config.database import Base
 
 config = context.config
 

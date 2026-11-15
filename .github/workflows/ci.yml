@@ -27,6 +27,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Generate Prisma client
+        # Sin cliente generado, los tipos de Prisma no resuelven y ESLint/tsc fallan.
+        run: pnpm --filter @parapymes/ct-fondos prisma:generate
+
       - name: Lint
         run: pnpm turbo lint
 

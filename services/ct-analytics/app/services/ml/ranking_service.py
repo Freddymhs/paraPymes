@@ -1,5 +1,6 @@
-import joblib
 from pathlib import Path
+
+import joblib
 from loguru import logger
 
 from app.services.ml.fallback_matcher import FallbackMatcher

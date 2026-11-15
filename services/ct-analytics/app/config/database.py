@@ -1,8 +1,9 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import DeclarativeBase, sessionmaker, Session
-from typing import Generator
-from app.config.settings import settings
+from collections.abc import Generator
 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+
+from app.config.settings import settings
 
 # Engine — equivalent to the Prisma client
 engine = create_engine(settings.DATABASE_URL, echo=settings.DEBUG)
@@ -13,7 +14,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Base(DeclarativeBase):
     """Base class all SQLAlchemy models inherit from."""
-    pass
 
 
 def get_db() -> Generator[Session, None, None]:
