@@ -43,7 +43,7 @@
     "csv-parse": "^6.2.1",
     "fastify": "^5.8.5",
     "joi": "^18.0.2",
-    "mongoose": "^8.0.0",
+    "mongoose": "^8.24.3",
     "nestjs-pino": "^4.6.0",
     "opossum": "^8.0.0",
     "pino-http": "^11.0.0",

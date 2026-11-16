@@ -32,5 +32,10 @@
     "node": ">=20",
     "pnpm": ">=9"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@9.15.0",
+  "pnpm": {
+    "overrides": {
+      "handlebars@<4.7.10": "4.7.10"
+    }
+  }
 }
