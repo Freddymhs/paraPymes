@@ -1,0 +1,34 @@
+name: Sanity scraper
+
+on:
+  schedule:
+    # Sanity diario del scraper fondos.gob.cl — 09:00 UTC
+    - cron: '0 9 * * *'
+
+jobs:
+  scraper-sanity:
+    # Si falla: fondos.gob.cl cambió su layout y el
+    # scraper está roto — GitHub notifica por email al dueño del workflow.
+    name: Sanity diario — scraper fondos.gob.cl
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm --filter @parapymes/ct-fondos exec playwright install --with-deps chromium
+
+      - name: Sanity test scraper
+        env:
+          RUN_SCRAPER_SANITY: '1'
+        # --forceExit: Crawlee deja handles async tras el teardown del browser
+        run: pnpm --filter @parapymes/ct-fondos test -- fondos-gob.scraper.spec --forceExit

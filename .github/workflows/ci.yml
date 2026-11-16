@@ -5,14 +5,10 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-  schedule:
-    # Sanity diario del scraper fondos.gob.cl — 09:00 UTC
-    - cron: '0 9 * * *'
 
 jobs:
   ci-apps:
     name: Lint, Typecheck & Test (Node.js apps)
-    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -40,37 +36,8 @@ jobs:
       - name: Test
         run: pnpm turbo test
 
-  scraper-sanity:
-    # Corre solo en el cron diario. Si falla: fondos.gob.cl cambió su layout y el
-    # scraper está roto — GitHub notifica por email al dueño del workflow.
-    name: Sanity diario — scraper fondos.gob.cl
-    if: github.event_name == 'schedule'
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Install Playwright Chromium
-        run: pnpm --filter @parapymes/ct-fondos exec playwright install --with-deps chromium
-
-      - name: Sanity test scraper
-        env:
-          RUN_SCRAPER_SANITY: '1'
-        # --forceExit: Crawlee deja handles async tras el teardown del browser
-        run: pnpm --filter @parapymes/ct-fondos test -- fondos-gob.scraper.spec --forceExit
-
   ci-analytics:
     name: Lint & Test (ct-analytics Python)
-    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     defaults:
       run:
