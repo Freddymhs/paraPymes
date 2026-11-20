@@ -1,8 +1,8 @@
 services:
   api:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../..
+      dockerfile: apps/ct-core-api/Dockerfile
     ports:
       - '3000:3000'
     environment:
@@ -22,9 +22,6 @@ services:
     depends_on:
       mongodb:
         condition: service_healthy
-    volumes:
-      - ./src:/app/src
-    command: pnpm dev
 
   mongodb:
     image: mongo:7-jammy
